@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, forwardRef } from 'react';
 import { Position } from './TShirtDesigner';
 
 interface CanvasProps {
@@ -10,10 +10,9 @@ interface CanvasProps {
   onResize: (size: number) => void;
 }
 
-// eslint-disable-next-line react/display-name
-const Canvas = React.forwardRef<HTMLCanvasElement, CanvasProps>(
+const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(
   ({ tShirtImage, logo, logoPosition, logoSize, onDrag, onResize }, ref) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const isDragging = useRef<boolean>(false);
 
     useEffect(() => {
@@ -64,7 +63,11 @@ const Canvas = React.forwardRef<HTMLCanvasElement, CanvasProps>(
       <canvas
         ref={(el) => {
           canvasRef.current = el;
-          if (ref) ref.current = el;
+          if (ref && typeof ref === 'function') {
+            ref(el);
+          } else if (ref) {
+            (ref as React.MutableRefObject<HTMLCanvasElement | null>).current = el;
+          }
         }}
         width={500}
         height={600}
@@ -77,5 +80,7 @@ const Canvas = React.forwardRef<HTMLCanvasElement, CanvasProps>(
     );
   }
 );
+
+Canvas.displayName = 'Canvas';
 
 export default Canvas;

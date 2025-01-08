@@ -18,7 +18,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
 
   const handleRemove = () => {
     setPreview(null);
-    onFileChange(null as any);
+    onFileChange(null as never);
   };
 
   return (
