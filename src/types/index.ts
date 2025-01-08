@@ -8,7 +8,10 @@ export interface TableData {
   export interface PaginationProps {
     currentPage: number;
     totalPages: number;
+    totalItems: number;
+    rowsPerPage: number;
     onPageChange: (page: number) => void;
+    onRowsPerPageChange: (rows: number) => void;
   }
   
   export interface SearchProps {

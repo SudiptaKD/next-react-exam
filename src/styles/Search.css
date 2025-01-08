@@ -1,8 +1,15 @@
 input[type="text"] {
-    width: 20%;
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
+  width: 20%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #444;
+  color: white;
+}
+
+input[type="text"]:focus {
+  border-color: #666;
+  outline: none;
+  background-color: #555;
+}

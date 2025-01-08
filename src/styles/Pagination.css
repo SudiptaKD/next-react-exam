@@ -1,19 +1,58 @@
 .pagination-controls {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 16px;
-  }
-  
-  .pagination-controls button {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .pagination-controls button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+}
+
+.rows-per-page {
+  display: flex;
+  align-items: center;
+}
+
+.rows-per-page label {
+  margin-right: 0.5rem;
+  font-size: 0.875rem;
+  color: #ccc;
+}
+
+.rows-per-page select {
+  border: 1px solid #444;
+  background-color: #444;
+  color: white;
+  padding: 0.25rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.rows-per-page select:focus {
+  border-color: #666;
+  outline: none;
+  background-color: #555;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border: 1px solid #444;
+  background-color: #444;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+span {
+  font-size: 0.875rem;
+  color: #ccc;
+}
