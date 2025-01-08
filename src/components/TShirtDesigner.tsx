@@ -1,30 +1,71 @@
 import React, { useRef, useState } from 'react';
 import Canvas from './Canvas';
-import LogoUploader from './LogoUploader';
-import Resizer from './Resizer';
-import { generateFinalImage } from '@/utils/generateFinalImage'; 
-import "../styles/TShirtDesigner.css"
+import FileUpload from './FileUpload';
+import ControlPanel from './ControlPanel';
+
+export interface Position {
+  x: number;
+  y: number;
+}
 
 const TShirtDesigner: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null); // Allow null
   const [logo, setLogo] = useState<string | null>(null);
-  const [position, setPosition] = useState({ x: 50, y: 50 });
-  const [size, setSize] = useState({ width: 100, height: 100 });
+  const [logoPosition, setLogoPosition] = useState<Position>({ x: 100, y: 100 });
+  const [logoSize, setLogoSize] = useState<number>(100); // in pixels
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const handleDrag = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    setPosition({
-      x: e.nativeEvent.offsetX - size.width / 2,
-      y: e.nativeEvent.offsetY - size.height / 2,
-    });
+  const handleFileChange = (file: File) => {
+    if (file) {
+      setLogo(URL.createObjectURL(file));
+    }
+  };
+
+  const handleDrag = (x: number, y: number) => {
+    setLogoPosition({ x, y });
+  };
+
+  const handleResize = (size: number) => {
+    setLogoSize(size);
+  };
+
+  const handleDownload = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const link = document.createElement('a');
+      link.download = 'tshirt-design.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    }
   };
 
   return (
-    <div>
-      <Canvas canvasRef={canvasRef} onClick={handleDrag} />
-      <LogoUploader onUpload={(file) => setLogo(URL.createObjectURL(file))} />
-      <Resizer onResize={(scale) => setSize({ width: 100 * scale, height: 100 * scale })} />
-      <button onClick={() => generateFinalImage(canvasRef, logo, position, size)}>Generate Final Image</button>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-2">
+      <div className="shadow-lg bg-white rounded-lg p-2 w-full max-w-5xl flex">
+        <div className="flex-1 p-4">
+          <Canvas
+            ref={canvasRef}
+            tShirtImage="/tshirt.png"
+            logo={logo}
+            logoPosition={logoPosition}
+            logoSize={logoSize}
+            onDrag={handleDrag}
+            onResize={handleResize}
+          />
+        </div>
+
+        <div className="flex flex-col w-1/3 p-4 space-y-4">
+          <div className="flex-1 border border-gray-300 rounded-lg p-4">
+            <FileUpload onFileChange={handleFileChange} />
+          </div>
+
+          <div className="flex-1 mt-4  rounded-lg ">
+            <ControlPanel onDownload={handleDownload} />
+          </div>
+        </div>
+      </div>
     </div>
+
   );
 };
+
 export default TShirtDesigner;

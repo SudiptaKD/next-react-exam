@@ -16,20 +16,6 @@ export interface TableData {
     onChange: (value: string) => void;
   }
   
-  export interface CanvasProps {
-    canvasRef: React.RefObject<HTMLCanvasElement | null>;
-    onClick: (e: React.MouseEvent<HTMLCanvasElement>) => void;
-  }
-  
-  
-  export interface LogoUploaderProps {
-    onUpload: (file: File) => void;
-  }
-  
-  export interface ResizerProps {
-    onResize: (scale: number) => void;
-  }
-  
   export interface ImageProps {
     src: string;
     alt: string;
