@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Table from './Table';
 import Pagination from './Pagination';
 import Search from './Search';
-//import Image from './Image';
 import { fetchData } from '@/api/fetchData';
 import { TableData } from '@/types';
 
@@ -26,7 +25,6 @@ const CustomTable: React.FC = () => {
 
   return (
     <div>
-      {/* <Image src="/reference-image.jpg" alt="Reference" className="reference-image" /> */}
       <Search value={searchTerm} onChange={setSearchTerm} />
       <Table data={data} />
       <Pagination
